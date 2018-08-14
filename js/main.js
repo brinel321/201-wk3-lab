@@ -2,8 +2,9 @@
 console.log('js is linked');
 
 //constructor to build products
-function Products(filename) {
+function Products(filename, productname) {
   this.filename = filename;
+  this.productname = productname;
   this.votes = 0;
   this.shown = 0;
   Products.allProducts.push(this);
@@ -19,25 +20,25 @@ var numMaxClicks = 25;
 var imgPrint = [];
 
 //all objects built using the product constructor
-new Products('img/bathroom.jpg');
-new Products('img/boots.jpg');
-new Products('img/bubblegum.jpg');
-new Products('img/bag.jpg');
-new Products('img/banana.jpg');
-new Products('img/chair.jpg');
-new Products('img/cthulhu.jpg');
-new Products('img/dog-duck.jpg');
-new Products('img/dragon.jpg');
-new Products('img/pen.jpg');
-new Products('img/pet-sweep.jpg');
-new Products('img/scissors.jpg');
-new Products('img/shark.jpg');
-new Products('img/sweep.png');
-new Products('img/tauntaun.jpg');
-new Products('img/unicorn.jpg');
-new Products('img/usb.gif');
-new Products('img/water-can.jpg');
-new Products('img/wine-glass.jpg');
+new Products('img/bathroom.jpg', 'iPad Roller');
+new Products('img/boots.jpg', 'Rubber Sandals');
+new Products('img/bubblegum.jpg', 'Terrible Gum');
+new Products('img/bag.jpg', 'R2D2 Bag');
+new Products('img/banana.jpg', 'Banana Slicer');
+new Products('img/chair.jpg', 'Chair');
+new Products('img/cthulhu.jpg', 'Cthulhu');
+new Products('img/dog-duck.jpg', 'Duck Beak');
+new Products('img/dragon.jpg', 'Dragon Fruit');
+new Products('img/pen.jpg', 'Pen Utensials');
+new Products('img/pet-sweep.jpg', 'Pet Sweep');
+new Products('img/scissors.jpg', 'Pizza Cutter');
+new Products('img/shark.jpg', 'Shark Bag');
+new Products('img/sweep.png', 'Kid Sweeper');
+new Products('img/tauntaun.jpg', 'Tantuan');
+new Products('img/unicorn.jpg', 'Unicorn Meat');
+new Products('img/usb.gif', 'USB');
+new Products('img/water-can.jpg', 'Water Can');
+new Products('img/wine-glass.jpg', 'Wine Glass');
 
 //this function randomly generates product indexes and then displays the corresponding products; is called everytime the page is loaded and when the user clicks a product when they still have available clicks left.
 function displayNewProducts() {
@@ -95,7 +96,7 @@ function displayResults (){
 
 //the function either decides whether new images should be displayed or if the results should be displayed; is called everytime an image is clicked.
 function imageClicked(e){
-//  debugger;
+
   Products.allProducts[lastIndexUsed[e.target.dataset.index]].votes++;
   numPoductsClicked++;
 
