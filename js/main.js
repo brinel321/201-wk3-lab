@@ -1,7 +1,7 @@
 'use strict'; //highlights any mistakes made with variables
 console.log('js is linked');
 
-// constructor for products
+//constructor to build products
 function Products(filename) {
   this.filename = filename;
   this.votes = 0;
@@ -9,14 +9,16 @@ function Products(filename) {
   Products.allProducts.push(this);
 }
 
+//global variables
 Products.allProducts = [];
 var numProductsDisplayed = 3;
 var lastIndexUsed = [0, 1, 2, 3, 4, 5];
-// var lastIndexUsed = Array(Products.allProducts.length).fill(0);
+// var lastIndexUsed = Array(numProductsDisplayed *2).fill(1);
 var numPoductsClicked = 0;
 var numMaxClicks = 25;
 var imgPrint = [];
 
+//all objects built using the product constructor
 new Products('img/bathroom.jpg');
 new Products('img/boots.jpg');
 new Products('img/bubblegum.jpg');
@@ -37,30 +39,25 @@ new Products('img/usb.gif');
 new Products('img/water-can.jpg');
 new Products('img/wine-glass.jpg');
 
-
-function displayThreeNewProducts() {
-  // show new pictures to user
+//this function randomly generates product indexes and then displays the corresponding products; is called everytime the page is loaded and when the user clicks a product when they still have available clicks left.
+function displayNewProducts() {
   var currentProductIndex = [];
 
   do {
-    currentProductIndex[0] = Math.floor(Math.random() * Products.allProducts.length);
-    currentProductIndex[1] = Math.floor(Math.random() * Products.allProducts.length);
-    currentProductIndex[2] = Math.floor(Math.random() * Products.allProducts.length);
-    lastIndexUsed[3] = currentProductIndex[0];
-    lastIndexUsed[4] = currentProductIndex[1];
-    lastIndexUsed[5] = currentProductIndex[2];
+    for (var k = 0; k < numProductsDisplayed; k++){
+      currentProductIndex[k] = Math.floor(Math.random() * Products.allProducts.length);
+      lastIndexUsed[k + numProductsDisplayed] = currentProductIndex[k];
+    }
 
     var isLastRepeated = checkRepeatIndex(lastIndexUsed);
+
   } while (isLastRepeated === true);
 
-  for(var i=0; i < 3; i++){
+  for(var i=0; i < numProductsDisplayed; i++){
     Products.allProducts[currentProductIndex[i]].shown++;
     imgPrint[i].src = Products.allProducts[currentProductIndex[i]].filename;
+    lastIndexUsed[i] = lastIndexUsed[i+numProductsDisplayed];
   }
-
-  lastIndexUsed[0] = lastIndexUsed[3];
-  lastIndexUsed[1] = lastIndexUsed[4];
-  lastIndexUsed[2] = lastIndexUsed[5];
 }
 
 function checkRepeatIndex(arrIndex) {
@@ -75,6 +72,7 @@ function checkRepeatIndex(arrIndex) {
   return false;
 }
 
+//fuction used to display the results from the user survey; is called when the user has reached maximum number of clicks.
 function displayResults (){
   var testImages = document.getElementById("testImages");
   testImages.style.display = "none";
@@ -94,21 +92,24 @@ function displayResults (){
   }
 }
 
+//the function either decides whether new images should be displayed or if the results should be displayed; is called everytime an image is clicked.
 function imageClicked(e){
 
-  var image = e.target.dataset.index;
+  // var countVotes = Products(e.target.src)[];
 
-  Products.allProducts[image].votes++;
+  // countVotes.votes++;
+
+  // Products.allProducts.fileName(image).votes++;
   numPoductsClicked++;
 
   if (numPoductsClicked < numMaxClicks){
-    displayThreeNewProducts();
+    displayNewProducts();
   }else{
     displayResults();
   }
 }
 
-//creates event listeners
+//the function creates event listeners for the images displayed; it is called everytime the page loads.
 function createEventListers(numProducts){
   for(var j = 0; j < numProducts; j++){
     var printImages = document.getElementById("testImages");
@@ -121,5 +122,6 @@ function createEventListers(numProducts){
   }
 }
 
+//execution code
 createEventListers(numProductsDisplayed);
-displayThreeNewProducts();
+displayNewProducts();
