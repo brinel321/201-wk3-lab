@@ -43,7 +43,9 @@ new Products('img/wine-glass.jpg', 'Wine Glass');
 //this function randomly generates product indexes and then displays the corresponding products; is called everytime the page is loaded and when the user clicks a product when they still have available clicks left.
 function displayNewProducts() {
   var currentProductIndex = [];
+  var chart = document.getElementById("Chart")
 
+  chart.style.display = "none";
   do {//this loop generates product indexes that are different from each other and from the last set of products showm.
     for (var k = 0; k < numProductsDisplayed; k++){
       currentProductIndex[k] = Math.floor(Math.random() * Products.allProducts.length);
@@ -75,24 +77,24 @@ function checkRepeatIndex(arrIndex) {
 }
 
 //fuction used to display the results from the user survey; is called when the user has reached maximum number of clicks.
-function displayResults (){
-  var testImages = document.getElementById("testImages");
-  testImages.style.display = "none";
+// function displayResults (){
+//   var testImages = document.getElementById("testImages");
+//   testImages.style.display = "none";
 
-  for( var i = 0; i < Products.allProducts.length; i++){
-    var printImages = document.getElementById("results");
-    var img = document.createElement('img');
-    var timesChosen = document.createElement('h2');
-    var percentChosen = document.createElement('h2');
+  // for( var i = 0; i < Products.allProducts.length; i++){
+  //   var printImages = document.getElementById("results");
+  //   var img = document.createElement('img');
+  //   // var timesChosen = document.createElement('h2');
+  //   // var percentChosen = document.createElement('h2');
 
-    img.src = Products.allProducts[i].filename;
-    timesChosen.innerHTML = ('Times Chosen: ' + Products.allProducts[i].votes);
-    percentChosen.innerHTML = ('Percent Chosen: ' + ((Products.allProducts[i].votes/Products.allProducts[i].shown)*100));
-    printImages.appendChild(img);
-    printImages.appendChild(timesChosen);
-    printImages.appendChild(percentChosen);
-  }
-}
+  //   img.src = Products.allProducts[i].filename;
+  //   // timesChosen.innerHTML = ('Times Chosen: ' + Products.allProducts[i].votes);
+  //   // percentChosen.innerHTML = ('Percent Chosen: ' + ((Products.allProducts[i].votes/Products.allProducts[i].shown)*100));
+  //   printImages.appendChild(img);
+  //   // printImages.appendChild(timesChosen);
+  //   // printImages.appendChild(percentChosen);
+  // }
+// }
 
 //the function either decides whether new images should be displayed or if the results should be displayed; is called everytime an image is clicked.
 function imageClicked(e){
@@ -103,7 +105,9 @@ function imageClicked(e){
   if (numPoductsClicked < numMaxClicks){
     displayNewProducts();
   }else{
-    displayResults();
+    // displayResults();
+    displayChart();
+
   }
 }
 
@@ -113,6 +117,55 @@ function createEventListers(numProducts){
     imgPrint[j] = document.getElementsByTagName('img')[j];
     imgPrint[j].addEventListener('click', imageClicked);
   }
+}
+
+function displayChart() {
+ 
+  // need something similar for the numbers
+  var namesArray = [];
+  var votesArray = [];
+  var testImages = document.getElementById("testImages");
+  var chart = document.getElementById("Chart");
+
+  testImages.style.display = "none";
+  chart.style.display = "inline-block";
+
+  for (var i = 0; i < Products.allProducts.length; i++) {
+    // also add numbers to the new array
+    namesArray.push(Products.allProducts[i].productname);
+    votesArray.push(Products.allProducts[i].votes);
+  }
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: namesArray,
+      datasets: [{
+        label: '# of Votes',
+        data: votesArray, // these numbers seem important
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: 'rgb(0,0,0)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true,
+            suggestedMax: 6
+          }
+        }]
+      }
+    }
+  });
 }
 
 //execution code
