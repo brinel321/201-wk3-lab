@@ -1,6 +1,6 @@
-# User Stories: Goat Vote
+# User Stories: BusMall
 > Format: as a X, I want to Y in order to Z.
 
-*As a goat enthusiast, I wasn to see some pictures of goats on order to experience joy.
-*AS a goat enthusiast, I want to provide my opinions on the goats I see, in order to further goat enthusiasm everywhere.
-*As a goat breeder, I want to see which goats people find most beautiful so I can price my goats appropriately
+*As a goods distributor, I want to provide store with products that customers are interested in buying.
+*AS a goods distributor, I want to understand which products are the most popular to ensure that I have them fully stocked.
+*As a goods ditributor, I want to know my customer buying habits so I can adjust store hours, locations, distrobution.
