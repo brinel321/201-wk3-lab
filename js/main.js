@@ -43,7 +43,7 @@ new Products('img/wine-glass.jpg');
 function displayNewProducts() {
   var currentProductIndex = [];
 
-  do {
+  do {//this loop generates product indexes that are different from each other and from the last set of products showm.
     for (var k = 0; k < numProductsDisplayed; k++){
       currentProductIndex[k] = Math.floor(Math.random() * Products.allProducts.length);
       lastIndexUsed[k + numProductsDisplayed] = currentProductIndex[k];
@@ -53,13 +53,14 @@ function displayNewProducts() {
 
   } while (isLastRepeated === true);
 
-  for(var i=0; i < numProductsDisplayed; i++){
+  for(var i=0; i < numProductsDisplayed; i++){//this loop displays the products and indicats to the project's corresponding object that they've been shown.
     Products.allProducts[currentProductIndex[i]].shown++;
     imgPrint[i].src = Products.allProducts[currentProductIndex[i]].filename;
     lastIndexUsed[i] = lastIndexUsed[i+numProductsDisplayed];
   }
 }
 
+//function used to check for duplicate numbers in the index array; called after numbers are generated.
 function checkRepeatIndex(arrIndex) {
   var counts = [];
   for(var i = 0; i <= arrIndex.length; i++) {
@@ -94,12 +95,8 @@ function displayResults (){
 
 //the function either decides whether new images should be displayed or if the results should be displayed; is called everytime an image is clicked.
 function imageClicked(e){
-
-  // var countVotes = Products(e.target.src)[];
-
-  // countVotes.votes++;
-
-  // Products.allProducts.fileName(image).votes++;
+//  debugger;
+  Products.allProducts[lastIndexUsed[e.target.dataset.index]].votes++;
   numPoductsClicked++;
 
   if (numPoductsClicked < numMaxClicks){
@@ -112,16 +109,24 @@ function imageClicked(e){
 //the function creates event listeners for the images displayed; it is called everytime the page loads.
 function createEventListers(numProducts){
   for(var j = 0; j < numProducts; j++){
-    var printImages = document.getElementById("testImages");
-    var img = document.createElement('img');
-
     imgPrint[j] = document.getElementsByTagName('img')[j];
     imgPrint[j].addEventListener('click', imageClicked);
-    img.src = '';
-    printImages.appendChild(img);
   }
 }
 
 //execution code
+// function createElements(numProducts){
+//   for(var j = 0; j < numProducts; j++){
+//     var printImages = document.getElementById("testImages");
+//     var imgEl = document.createElement('img')[j];
+
+//     imgEl.src = imgPrint[j].src;
+//     printImages.appendChild(imgEl);
+//   }
+// }
+
+
+// createElements(numProductsDisplayed);
+// displayNewProducts();
 createEventListers(numProductsDisplayed);
 displayNewProducts();

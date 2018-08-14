@@ -2,13 +2,16 @@ img {
     display: inline-block;
     height: 200px;
     margin: 10px;
+    padding: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    transition: all 1s ease-in-out;
+    transition: all .5s ease-in-out;
 }
 
 img:hover{
     /* height: 220px; */
     box-shadow: 5px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    background-color: blanchedalmond;
+
 }
 
 #results{
