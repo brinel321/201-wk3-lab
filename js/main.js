@@ -15,8 +15,8 @@ Products.allProducts = [];
 var numProductsDisplayed = 3;
 var lastIndexUsed = [0, 1, 2, 3, 4, 5];
 // var lastIndexUsed = Array(numProductsDisplayed *2).fill(1);
-var numPoductsClicked = 0;
-var numMaxClicks = 25;
+var numPoductsClicked = 1;
+var numMaxClicks = 26;
 var imgPrint = [];
 
 //all objects built using the product constructor
@@ -44,8 +44,11 @@ new Products('img/wine-glass.jpg', 'Wine Glass');
 function displayNewProducts() {
   var currentProductIndex = [];
   var chart = document.getElementById("Chart")
+  var scenario = document.getElementById("scenario")
 
+  scenario.innerText = ('Scenario ' + numPoductsClicked);
   chart.style.display = "none";
+
   do {//this loop generates product indexes that are different from each other and from the last set of products showm.
     for (var k = 0; k < numProductsDisplayed; k++){
       currentProductIndex[k] = Math.floor(Math.random() * Products.allProducts.length);
@@ -107,7 +110,6 @@ function imageClicked(e){
   }else{
     // displayResults();
     displayChart();
-
   }
 }
 
@@ -126,7 +128,9 @@ function displayChart() {
   var votesArray = [];
   var testImages = document.getElementById("testImages");
   var chart = document.getElementById("Chart");
+  var scenario = document.getElementById("scenario")
 
+  scenario.innerText = 'Survey Results';
   testImages.style.display = "none";
   chart.style.display = "inline-block";
 
@@ -156,11 +160,13 @@ function displayChart() {
       }]
     },
     options: {
+      maintainAspectRatio: false,
       scales: {
         yAxes: [{
           ticks: {
             beginAtZero:true,
-            suggestedMax: 6
+            suggestedMax: 4,
+            stepSize: 1,
           }
         }]
       }
