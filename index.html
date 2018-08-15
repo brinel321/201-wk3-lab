@@ -3,20 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
+  <title>Bus Mall</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Stalinist+One" rel="stylesheet">
   <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
 </head>
 <body>
-    <h1>Welcome to BusMall</h1>
-    <h2 id="title">Pick your favorite product from the images below! At the end we'll show you which ones you enjoyed the most!!</h2>
-    <div id="testImages">
-      <img data-index="0" src="" />
-      <img data-index="1" src="" />
-      <img data-index="2" src="" />
-    </div>
-    <div id="results"></div>
+  <h1>[B]uy[U]seless[S]hit <p>Mall</p></h1>
+  <h2 id="title">Welcome to the B.U.S. Mall product survey. We strive to provide our customers with the most useless products we can find from suppliers.  Please help us detrmine what we should stock by selecting the least useful product in each scenario.</h2>
+  <h3 id="scenario"></h3>
+  <div id="testImages">
+    <img data-index="0" src="" />
+    <img data-index="1" src="" />
+    <img data-index="2" src="" />
+  </div>
+  <div id="results"></div>
+  <div id="Chart">
+    <canvas id="myChart" width="500" height="500"></canvas>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
