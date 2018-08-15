@@ -14,7 +14,6 @@ function Products(filename, productname) {
 Products.allProducts = [];
 var numProductsDisplayed = 3;
 var lastIndexUsed = [0, 1, 2, 3, 4, 5];
-// var lastIndexUsed = Array(numProductsDisplayed *2).fill(1);
 var numPoductsClicked = 1;
 var numMaxClicks = 26;
 var imgPrint = [];
@@ -79,36 +78,14 @@ function checkRepeatIndex(arrIndex) {
   return false;
 }
 
-//fuction used to display the results from the user survey; is called when the user has reached maximum number of clicks.
-// function displayResults (){
-//   var testImages = document.getElementById("testImages");
-//   testImages.style.display = "none";
-
-  // for( var i = 0; i < Products.allProducts.length; i++){
-  //   var printImages = document.getElementById("results");
-  //   var img = document.createElement('img');
-  //   // var timesChosen = document.createElement('h2');
-  //   // var percentChosen = document.createElement('h2');
-
-  //   img.src = Products.allProducts[i].filename;
-  //   // timesChosen.innerHTML = ('Times Chosen: ' + Products.allProducts[i].votes);
-  //   // percentChosen.innerHTML = ('Percent Chosen: ' + ((Products.allProducts[i].votes/Products.allProducts[i].shown)*100));
-  //   printImages.appendChild(img);
-  //   // printImages.appendChild(timesChosen);
-  //   // printImages.appendChild(percentChosen);
-  // }
-// }
-
 //the function either decides whether new images should be displayed or if the results should be displayed; is called everytime an image is clicked.
 function imageClicked(e){
-
   Products.allProducts[lastIndexUsed[e.target.dataset.index]].votes++;
   numPoductsClicked++;
 
   if (numPoductsClicked < numMaxClicks){
     displayNewProducts();
   }else{
-    // displayResults();
     displayChart();
   }
 }
@@ -121,9 +98,8 @@ function createEventListers(numProducts){
   }
 }
 
+//the function creates a chart to provide visual representation of # of click; it is called when the maximum number of clicks has been reached.
 function displayChart() {
- 
-  // need something similar for the numbers
   var namesArray = [];
   var votesArray = [];
   var testImages = document.getElementById("testImages");
@@ -135,7 +111,6 @@ function displayChart() {
   chart.style.display = "inline-block";
 
   for (var i = 0; i < Products.allProducts.length; i++) {
-    // also add numbers to the new array
     namesArray.push(Products.allProducts[i].productname);
     votesArray.push(Products.allProducts[i].votes);
   }
@@ -146,7 +121,7 @@ function displayChart() {
       labels: namesArray,
       datasets: [{
         label: '# of Votes',
-        data: votesArray, // these numbers seem important
+        data: votesArray,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -175,18 +150,5 @@ function displayChart() {
 }
 
 //execution code
-// function createElements(numProducts){
-//   for(var j = 0; j < numProducts; j++){
-//     var printImages = document.getElementById("testImages");
-//     var imgEl = document.createElement('img')[j];
-
-//     imgEl.src = imgPrint[j].src;
-//     printImages.appendChild(imgEl);
-//   }
-// }
-
-
-// createElements(numProductsDisplayed);
-// displayNewProducts();
 createEventListers(numProductsDisplayed);
 displayNewProducts();
