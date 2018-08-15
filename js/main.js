@@ -2,51 +2,79 @@
 console.log('js is linked');
 
 //constructor to build products
-function Products(filename, productname) {
+function Products(filename, productname, votes, shown) {
   this.filename = filename;
   this.productname = productname;
-  this.votes = 0;
-  this.shown = 0;
+  this.votes = votes || 0;
+  this.shown = shown || 0;
   Products.allProducts.push(this);
 }
 
 //global variables
 Products.allProducts = [];
-var numProductsDisplayed = 3;
-var lastIndexUsed = [0, 1, 2, 3, 4, 5];
+var numProductsDisplayed = 6;
+var lastIndexUsed = [];
 var numPoductsClicked = 1;
 var numMaxClicks = 26;
 var imgPrint = [];
+var loadedProducts = JSON.parse(localStorage.getItem('products'));
 
-//all objects built using the product constructor
-new Products('img/bathroom.jpg', 'iPad Roller');
-new Products('img/boots.jpg', 'Rubber Sandals');
-new Products('img/bubblegum.jpg', 'Terrible Gum');
-new Products('img/bag.jpg', 'R2D2 Bag');
-new Products('img/banana.jpg', 'Banana Slicer');
-new Products('img/chair.jpg', 'Chair');
-new Products('img/cthulhu.jpg', 'Cthulhu');
-new Products('img/dog-duck.jpg', 'Duck Beak');
-new Products('img/dragon.jpg', 'Dragon Fruit');
-new Products('img/pen.jpg', 'Pen Utensials');
-new Products('img/pet-sweep.jpg', 'Pet Sweep');
-new Products('img/scissors.jpg', 'Pizza Cutter');
-new Products('img/shark.jpg', 'Shark Bag');
-new Products('img/sweep.png', 'Kid Sweeper');
-new Products('img/tauntaun.jpg', 'Tantuan');
-new Products('img/unicorn.jpg', 'Unicorn Meat');
-new Products('img/usb.gif', 'USB');
-new Products('img/water-can.jpg', 'Water Can');
-new Products('img/wine-glass.jpg', 'Wine Glass');
+//this function builds the framework to dynamically change the # of products displayed.
+function numProductsToDisplay(){
+  lastIndexUsed = Array(2*numProductsDisplayed);
+
+  for( var x = 0; x < lastIndexUsed.length; x++){
+    lastIndexUsed[x] = x;
+  }
+
+  for(var y = 0; y < numProductsDisplayed; y++){
+    var testImages = document.getElementById("testImages");
+    var img = document.createElement("img");
+
+    img.dataset.index = y;
+    img.src = '';
+    testImages.appendChild(img);
+  }
+}
+
+//this function builds product objects using the product constructor; object key/value pairs pulled from local storage -or- if visited for the first time, initiated.
+function createProducts(){
+  if (loadedProducts) {
+    for (var i = 0; i < loadedProducts.length; i++) {
+      new Products(loadedProducts[i].filename, loadedProducts[i].productname, loadedProducts[i].votes, loadedProducts[i].shown);
+    }
+  } else {//all objects built using the product constructor
+    new Products('img/bathroom.jpg', 'iPad Roller');
+    new Products('img/boots.jpg', 'Rubber Sandals');
+    new Products('img/bubblegum.jpg', 'Terrible Gum');
+    new Products('img/bag.jpg', 'R2D2 Bag');
+    new Products('img/banana.jpg', 'Banana Slicer');
+    new Products('img/chair.jpg', 'Chair');
+    new Products('img/cthulhu.jpg', 'Cthulhu');
+    new Products('img/dog-duck.jpg', 'Duck Beak');
+    new Products('img/dragon.jpg', 'Dragon Fruit');
+    new Products('img/pen.jpg', 'Pen Utensials');
+    new Products('img/pet-sweep.jpg', 'Pet Sweep');
+    new Products('img/scissors.jpg', 'Pizza Cutter');
+    new Products('img/shark.jpg', 'Shark Bag');
+    new Products('img/sweep.png', 'Kid Sweeper');
+    new Products('img/tauntaun.jpg', 'Tantuan');
+    new Products('img/unicorn.jpg', 'Unicorn Meat');
+    new Products('img/usb.gif', 'USB');
+    new Products('img/water-can.jpg', 'Water Can');
+    new Products('img/wine-glass.jpg', 'Wine Glass');
+  }
+}
 
 //this function randomly generates product indexes and then displays the corresponding products; is called everytime the page is loaded and when the user clicks a product when they still have available clicks left.
 function displayNewProducts() {
   var currentProductIndex = [];
-  var chart = document.getElementById("Chart")
-  var scenario = document.getElementById("scenario")
+  var chart = document.getElementById("Chart");
+  var scenario = document.getElementById("scenario");
 
   scenario.innerText = ('Scenario ' + numPoductsClicked);
   chart.style.display = "none";
+  localStorage.setItem('products', JSON.stringify(Products.allProducts));
 
   do {//this loop generates product indexes that are different from each other and from the last set of products showm.
     for (var k = 0; k < numProductsDisplayed; k++){
@@ -58,7 +86,7 @@ function displayNewProducts() {
 
   } while (isLastRepeated === true);
 
-  for(var i=0; i < numProductsDisplayed; i++){//this loop displays the products and indicats to the project's corresponding object that they've been shown.
+  for(var i=0; i < numProductsDisplayed; i++){//this loop displays the products and indicats to the product's corresponding object that it's been shown.
     Products.allProducts[currentProductIndex[i]].shown++;
     imgPrint[i].src = Products.allProducts[currentProductIndex[i]].filename;
     lastIndexUsed[i] = lastIndexUsed[i+numProductsDisplayed];
@@ -104,7 +132,7 @@ function displayChart() {
   var votesArray = [];
   var testImages = document.getElementById("testImages");
   var chart = document.getElementById("Chart");
-  var scenario = document.getElementById("scenario")
+  var scenario = document.getElementById("scenario");
 
   scenario.innerText = 'Survey Results';
   testImages.style.display = "none";
@@ -150,5 +178,8 @@ function displayChart() {
 }
 
 //execution code
+numProductsToDisplay();
+createProducts();
 createEventListers(numProductsDisplayed);
 displayNewProducts();
+
